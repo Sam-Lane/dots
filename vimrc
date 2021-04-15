@@ -74,6 +74,9 @@ Plug 'szw/vim-maximizer'
 Plug 'jiangmiao/auto-pairs'
 Plug 'machakann/vim-sandwich'
 
+" COC
+Plug 'pappasam/coc-jedi', {'do': 'yarn install --frozen-lockfile && yarn build'}
+Plug 'josa42/coc-go', {'do': 'yarn install --frozen-lockfile && yarn build'}
 
 " Initialize plugin system
 call plug#end()
