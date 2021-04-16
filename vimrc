@@ -74,6 +74,9 @@ Plug 'szw/vim-maximizer'
 Plug 'jiangmiao/auto-pairs'
 Plug 'machakann/vim-sandwich'
 
+Plug 'voldikss/vim-floaterm'
+Plug 'vim-test/vim-test'
+
 " COC
 " Plug 'pappasam/coc-jedi', {'do': 'yarn install --frozen-lockfile && yarn build'}
 " Plug 'josa42/coc-go', {'do': 'yarn install --frozen-lockfile && yarn build'}
@@ -104,6 +107,11 @@ require'nvim-treesitter.configs'.setup {
     }
 }
 EOF
+
+" Test settings
+let test#strategy = "floaterm"
+let test#php#runner = 'phpunit'
+let test#php#phpunit#executable = 'docker-compose exec app vendor/bin/phpunit'
 
 " -------------------------------------------------------------------------------------------------
 " coc.nvim default settings
