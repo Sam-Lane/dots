@@ -75,13 +75,13 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'machakann/vim-sandwich'
 
 " COC
-Plug 'pappasam/coc-jedi', {'do': 'yarn install --frozen-lockfile && yarn build'}
-Plug 'josa42/coc-go', {'do': 'yarn install --frozen-lockfile && yarn build'}
+" Plug 'pappasam/coc-jedi', {'do': 'yarn install --frozen-lockfile && yarn build'}
+" Plug 'josa42/coc-go', {'do': 'yarn install --frozen-lockfile && yarn build'}
 
 " Initialize plugin system
 call plug#end()
 color dracula
-
+hi Visual term=reverse cterm=reverse
 let g:lightline = { 'colorscheme': 'dracula'}
 
 
@@ -108,6 +108,7 @@ EOF
 " -------------------------------------------------------------------------------------------------
 " coc.nvim default settings
 " -------------------------------------------------------------------------------------------------
+let g:coc_global_extensions = ['coc-docker', 'coc-go', 'coc-jedi', 'coc-phpls', 'coc-tsserver', 'coc-json', 'coc-yaml', 'coc-sh']
 
 " if hidden is not set, TextEdit might fail.
 set hidden
@@ -188,6 +189,14 @@ nnoremap <S-f> :Telescope find_files<CR>
 nnoremap <C-f> :Telescope live_grep <CR>
 nnoremap <S-b> :Telescope buffers <CR>
 
+lua << EOF
+require('telescope').setup{
+	defaults = {	
+		prompt_prefix="🔎 "
+	}
+}
+EOF
+
 
 " terraform fmt on save
 let g:terraform_fmt_on_save=1
@@ -198,4 +207,21 @@ nnoremap <silent> <leader>gs :Gstatus<CR>
 
 " remap swap file
 nnoremap <C-s> <C-^>
+
+" Remove bad habits
+nnoremap <Left> <nop>
+vnoremap <Left> <nop>
+inoremap <Left> <nop>
+
+nnoremap <Right> <nop>
+vnoremap <Right> <nop>
+inoremap <Right> <nop>
+
+nnoremap <Up> <nop>
+vnoremap <Up> <nop>
+inoremap <Up> <nop>
+
+nnoremap <Down> <nop>
+vnoremap <Down> <nop>
+inoremap <Down> <nop>
 
