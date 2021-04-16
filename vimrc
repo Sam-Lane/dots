@@ -50,8 +50,8 @@ Plug 'fatih/vim-go', { 'tag': '*' }
 " Plugin options
 Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-" Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
@@ -183,12 +183,6 @@ map <C-g> :GoDoc<CR>
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 set noexpandtab
 set cursorline
-
-
-" nnoremap <S-f> :GFiles <CR>
-" nnoremap <C-f> :Rg <CR>
-" nnoremap <S-b> :Buffers <CR>
-" nnoremap <S-h> :History <CR>
 
 nnoremap <S-f> :Telescope find_files<CR>
 nnoremap <C-f> :Telescope live_grep <CR>
