@@ -33,9 +33,6 @@ alias ansible-playbook="ansible-playbook --diff"
 export PATH="/usr/local/opt/mysql-client/bin:$PATH"
 
 
-# VAULT config
-export VAULT_ADDR="https://secrets.tillo.dev"
-
 # Kubernetes alias
 
 function kubectl() {
