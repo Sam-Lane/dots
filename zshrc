@@ -48,7 +48,7 @@ alias kwatch="watch kubectl"
 alias kns="kubectl config set-context --current --namespace"
 alias kcluster="kubectl config use-context "
 
-alias doco="docker-compose"
+alias doco="docker compose"
 
 containme(){
 	echo 📦 dropping into a $1 container with $PWD mounted into it
