@@ -196,11 +196,21 @@ set cursorline
 nnoremap <S-f> :Telescope find_files<CR>
 nnoremap <C-f> :Telescope live_grep <CR>
 nnoremap <S-b> :Telescope buffers <CR>
+nnoremap <C-b> :Telescope git_branches<CR>
+
+highlight TelescopeBorder         guifg=#ff79c6
+highlight TelescopePromptBorder   guifg=#ff79c6
+highlight TelescopeResultsBorder  guifg=#ff79c6
+highlight TelescopePreviewBorder  guifg=#ff79c6
 
 lua << EOF
 require('telescope').setup{
 	defaults = {	
-		prompt_prefix="🔎 "
+		prompt_position = "top",
+		prompt_prefix="🔎 ",
+		file_ignore_patterns = {
+		"vendor/*",
+			}
 	}
 }
 EOF
