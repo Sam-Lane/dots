@@ -1,6 +1,12 @@
 set number
 set rnu
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
+set smartindent
+set noswapfile
+set undodir=~/.vim/undodir
+set undofile
+set incsearch
+set hidden
 
 nnoremap <SPACE> <Nop>
 let mapleader=" "
@@ -205,8 +211,7 @@ highlight TelescopePreviewBorder  guifg=#ff79c6
 
 lua << EOF
 require('telescope').setup{
-	defaults = {	
-		prompt_position = "top",
+	defaults = {
 		prompt_prefix="🔎 ",
 		file_ignore_patterns = {
 		"vendor/*",
@@ -242,4 +247,19 @@ inoremap <Up> <nop>
 nnoremap <Down> <nop>
 vnoremap <Down> <nop>
 inoremap <Down> <nop>
+
+
+" Auto groups
+
+fun! TrimWhiteSpace()
+	let l:save = winsaveview()
+	keeppatterns %s/\s\+$//e
+	call winrestview(l:save)
+endfun
+
+augroup AUTO_WHITESPACE
+	autocmd!
+	autocmd BufWritePre * :call TrimWhiteSpace()
+augroup END
+
 

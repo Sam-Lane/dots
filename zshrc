@@ -1,9 +1,7 @@
 zmodload zsh/zprof
 
-
 # on MacOS set this and restart system for better keyboard performance :^)
 # defaults write NSGlobalDomain KeyRepeat -int 1
-
 
 autoload -Uz compinit
 if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' ~/.zcompdump) ]; then
@@ -12,9 +10,7 @@ else
   compinit -C
 fi
 
-
 export ZSH="$HOME/.oh-my-zsh"
-
 
 ZSH_THEME="dracula"
 
@@ -50,6 +46,7 @@ alias kcluster="kubectl config use-context "
 
 alias doco="docker compose"
 
+# containme drops you and your current path into a docker image you spesify
 containme(){
 	echo 📦 dropping into a $1 container with $PWD mounted into it
 	docker run -it --rm -v $(pwd):/work -w /work $1 $2
@@ -61,9 +58,16 @@ urlencode(){
   jq -nr --arg v "$args" '$v|@uri';
 }
 
+# duckduckgo search from the command line
 duck(){
         echo 🦆💨 quack 🔎 $@
         open "https://duckduckgo.com/html/?q=$(urlencode "$@")"
 }
 
-#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# gifmov takes a MacOS screen recording from command shift 5 and converts it to a gif.
+gifmov(){
+        ffmpeg -i $1 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $2
+}
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
