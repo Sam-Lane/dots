@@ -42,19 +42,7 @@ Plug 'junegunn/vim-easy-align'
 
 Plug 'itchyny/lightline.vim'
 
-" Any valid git URL is allowed
-"Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-
-" Multiple Plug commands can be written in a single line using | separators
-"Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-
-" On-demand loading
-
-" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-Plug 'fatih/vim-go', { 'tag': '*' }
-
-" Plugin options
-Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+Plug 'fatih/vim-go'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -83,12 +71,9 @@ Plug 'machakann/vim-sandwich'
 Plug 'voldikss/vim-floaterm'
 Plug 'vim-test/vim-test'
 
-" COC
-" Plug 'pappasam/coc-jedi', {'do': 'yarn install --frozen-lockfile && yarn build'}
-" Plug 'josa42/coc-go', {'do': 'yarn install --frozen-lockfile && yarn build'}
-
 " Initialize plugin system
 call plug#end()
+
 color dracula
 hi Visual term=reverse cterm=reverse
 let g:lightline = { 'colorscheme': 'dracula'}
