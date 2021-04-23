@@ -76,7 +76,18 @@ call plug#end()
 
 color dracula
 hi Visual term=reverse cterm=reverse
-let g:lightline = { 'colorscheme': 'dracula'}
+
+let g:lightline = {
+			\'colorscheme': 'dracula',
+			\'active' : {
+			\'left': [['mode', 'paste'],
+			\['gitbranch', 'readonly', 'filename', 'modified']],
+			\'right': [['lineinfo', 'percent']]
+			\},
+			\'component_function': {
+			\'gitbranch': 'FugitiveHead'
+			\},
+			\}
 
 
 lua << EOF
