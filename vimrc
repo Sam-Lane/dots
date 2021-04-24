@@ -59,6 +59,7 @@ Plug 'rhysd/git-messenger.vim', {'on': 'GitMessager'}
 Plug 'stsewd/fzf-checkout.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
 
 Plug 'Yggdroot/indentLine'
 
