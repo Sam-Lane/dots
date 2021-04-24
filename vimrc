@@ -7,6 +7,7 @@ set undodir=~/.vim/undodir
 set undofile
 set incsearch
 set hidden
+set nowrap
 
 nnoremap <SPACE> <Nop>
 let mapleader=" "
@@ -82,7 +83,7 @@ let g:lightline = {
 			\'active' : {
 			\'left': [['mode', 'paste'],
 			\['gitbranch', 'readonly', 'filename', 'modified']],
-			\'right': [['lineinfo', 'percent']]
+			\'right': [['filetype', 'lineinfo', 'percent']]
 			\},
 			\'component_function': {
 			\'gitbranch': 'FugitiveHead'
