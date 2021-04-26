@@ -75,7 +75,9 @@ Plug 'vim-test/vim-test'
 " Initialize plugin system
 call plug#end()
 
-color dracula
+let g:dracula_colorterm = 0
+colorscheme dracula
+
 hi Visual term=reverse cterm=reverse
 
 let g:lightline = {
