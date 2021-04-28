@@ -59,6 +59,7 @@ Plug 'rhysd/git-messenger.vim', {'on': 'GitMessager'}
 Plug 'stsewd/fzf-checkout.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
 
 Plug 'Yggdroot/indentLine'
 
@@ -67,7 +68,6 @@ Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
 
 Plug 'jiangmiao/auto-pairs'
-Plug 'machakann/vim-sandwich'
 
 Plug 'voldikss/vim-floaterm'
 Plug 'vim-test/vim-test'
