@@ -69,5 +69,11 @@ gifmov(){
         ffmpeg -i $1 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $2
 }
 
+# grab current ip address
+giefip(){
+	echo "curl http://checkip.amazonaws.com"
+	curl http://checkip.amazonaws.com
+}
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
