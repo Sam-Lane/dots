@@ -1,3 +1,4 @@
+export EDITOR=nvim
 zmodload zsh/zprof
 
 # on MacOS set this and restart system for better keyboard performance :^)

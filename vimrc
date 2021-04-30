@@ -40,6 +40,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-writer.nvim'
+Plug 'fannheyward/telescope-coc.nvim'
 
 Plug 'hashivim/vim-terraform'
 Plug 'junegunn/vim-easy-align'
@@ -147,7 +149,7 @@ nmap <silent> ]c <Plug>(coc-diagnostic-next)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gr :Telescope coc references<CR>
 
 " Use U to show documentation in preview window
 nnoremap <silent> U :call <SID>show_documentation()<CR>
@@ -188,25 +190,42 @@ set noexpandtab
 set cursorline
 
 nnoremap <S-f> :Telescope find_files<CR>
-nnoremap <C-f> :Telescope live_grep <CR>
+" nnoremap <C-f> :Telescope live_grep <CR>
+nnoremap <C-f> :Telescope fzf_writer staged_grep <CR>
 nnoremap <S-b> :Telescope buffers <CR>
 nnoremap <C-b> :Telescope git_branches<CR>
 
-highlight TelescopeBorder         guifg=#ff79c6
-highlight TelescopePromptBorder   guifg=#ff79c6
-highlight TelescopeResultsBorder  guifg=#ff79c6
-highlight TelescopePreviewBorder  guifg=#ff79c6
 
 lua << EOF
+require('telescope').load_extension('fzf_writer')
+require('telescope').load_extension('coc')
+
 require('telescope').setup{
 	defaults = {
 		prompt_prefix="🔎 ",
 		file_ignore_patterns = {
-		"vendor/*",
-			}
-	}
+		"vendor/",
+		"node-modules/",
+		}
+	},
+    extensions = {
+        fzf_writer = {
+            minimum_grep_characters = 2,
+            minimum_files_characters = 2,
+
+            -- Disabled by default.
+            -- Will probably slow down some aspects of the sorter, but can make color highlights.
+            -- I will work on this more later.
+            use_highlighter = true,
+        }
+    }
 }
 EOF
+
+highlight TelescopeBorder         guifg=#FF79C6
+highlight TelescopePromptBorder   guifg=#FF79C6
+highlight TelescopeResultsBorder  guifg=#FF79C6
+highlight TelescopePreviewBorder  guifg=#FF79C6
 
 
 " terraform fmt on save
