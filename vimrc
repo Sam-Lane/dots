@@ -15,7 +15,7 @@ let mapleader=" "
 
 " Install vim-plug if not found
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.nvim/site/autoload/plug.vim --create-dirs
+  silent !curl -fLo ~/.vim/site/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 
@@ -24,26 +24,15 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   \| PlugInstall --sync | source $MYVIMRC
 \| endif
 
-" Specify a directory for plugins
-" - For Neovim: stdpath('data') . '/plugged'
-" - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 
-" Make sure you use single quotes
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'dracula/vim', { 'as': 'dracula' }
-
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
-Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
-Plug 'airblade/vim-gitgutter'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
-Plug 'junegunn/vim-easy-align'
-
 Plug 'itchyny/lightline.vim'
 
-Plug 'fatih/vim-go'
+Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -51,13 +40,19 @@ Plug 'junegunn/fzf.vim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-writer.nvim'
+Plug 'fannheyward/telescope-coc.nvim'
 
 Plug 'hashivim/vim-terraform'
-
-Plug 'rhysd/git-messenger.vim', {'on': 'GitMessager'}
+Plug 'junegunn/vim-easy-align'
+Plug 'fatih/vim-go'
 
 Plug 'stsewd/fzf-checkout.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'rhysd/git-messenger.vim', {'on': 'GitMessager'}
+
+" tpope collection
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 
@@ -67,11 +62,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
 
-Plug 'jiangmiao/auto-pairs'
-Plug 'machakann/vim-sandwich'
-
 Plug 'voldikss/vim-floaterm'
-Plug 'vim-test/vim-test'
 
 " Initialize plugin system
 call plug#end()
@@ -92,7 +83,6 @@ let g:lightline = {
 			\'gitbranch': 'FugitiveHead'
 			\},
 			\}
-
 
 lua << EOF
 require'nvim-treesitter.configs'.setup {
@@ -122,7 +112,7 @@ let test#php#phpunit#executable = 'docker-compose exec app vendor/bin/phpunit'
 " -------------------------------------------------------------------------------------------------
 " coc.nvim default settings
 " -------------------------------------------------------------------------------------------------
-let g:coc_global_extensions = ['coc-docker', 'coc-go', 'coc-jedi', 'coc-phpls', 'coc-tsserver', 'coc-json', 'coc-yaml', 'coc-sh']
+let g:coc_global_extensions = ['coc-docker', 'coc-pairs', 'coc-go', 'coc-jedi', 'coc-phpls', 'coc-tsserver', 'coc-json', 'coc-yaml', 'coc-sh']
 
 " if hidden is not set, TextEdit might fail.
 set hidden
@@ -159,7 +149,7 @@ nmap <silent> ]c <Plug>(coc-diagnostic-next)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gr :Telescope coc references<CR>
 
 " Use U to show documentation in preview window
 nnoremap <silent> U :call <SID>show_documentation()<CR>
@@ -200,25 +190,42 @@ set noexpandtab
 set cursorline
 
 nnoremap <S-f> :Telescope find_files<CR>
-nnoremap <C-f> :Telescope live_grep <CR>
+" nnoremap <C-f> :Telescope live_grep <CR>
+nnoremap <C-f> :Telescope fzf_writer staged_grep <CR>
 nnoremap <S-b> :Telescope buffers <CR>
 nnoremap <C-b> :Telescope git_branches<CR>
 
-highlight TelescopeBorder         guifg=#ff79c6
-highlight TelescopePromptBorder   guifg=#ff79c6
-highlight TelescopeResultsBorder  guifg=#ff79c6
-highlight TelescopePreviewBorder  guifg=#ff79c6
 
 lua << EOF
+require('telescope').load_extension('fzf_writer')
+require('telescope').load_extension('coc')
+
 require('telescope').setup{
 	defaults = {
 		prompt_prefix="🔎 ",
 		file_ignore_patterns = {
-		"vendor/*",
-			}
-	}
+		"vendor/",
+		"node-modules/",
+		}
+	},
+    extensions = {
+        fzf_writer = {
+            minimum_grep_characters = 2,
+            minimum_files_characters = 2,
+
+            -- Disabled by default.
+            -- Will probably slow down some aspects of the sorter, but can make color highlights.
+            -- I will work on this more later.
+            use_highlighter = true,
+        }
+    }
 }
 EOF
+
+highlight TelescopeBorder         guifg=#FF79C6
+highlight TelescopePromptBorder   guifg=#FF79C6
+highlight TelescopeResultsBorder  guifg=#FF79C6
+highlight TelescopePreviewBorder  guifg=#FF79C6
 
 
 " terraform fmt on save
