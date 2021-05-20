@@ -64,6 +64,7 @@ Plug 'szw/vim-maximizer'
 
 Plug 'voldikss/vim-floaterm'
 
+Plug 'ThePrimeagen/vim-be-good', {'on': 'VimBeGood'}
 " Initialize plugin system
 call plug#end()
 
@@ -117,7 +118,7 @@ let g:coc_global_extensions = ['coc-docker', 'coc-pairs', 'coc-go', 'coc-jedi', 
 " if hidden is not set, TextEdit might fail.
 set hidden
 " Better display for messages
-set cmdheight=2
+set cmdheight=1
 " Smaller updatetime for CursorHold & CursorHoldI
 set updatetime=300
 " don't give |ins-completion-menu| messages.
@@ -234,6 +235,10 @@ let g:terraform_fmt_on_save=1
 " Git remaps
 nnoremap <silent> <leader>gb :GBranches<CR>
 nnoremap <silent> <leader>gs :Gstatus<CR>
+
+" Easy align
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 " remap swap file
 nnoremap <C-s> <C-^>
