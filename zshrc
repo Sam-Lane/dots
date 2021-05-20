@@ -43,7 +43,7 @@ function kubectl() {
 alias k="kubectl"
 alias kwatch="watch kubectl"
 alias kns="kubectl config set-context --current --namespace"
-alias kcluster="kubectl config use-context "
+alias kluster="kubectl config use-context "
 
 alias doco="docker compose"
 
