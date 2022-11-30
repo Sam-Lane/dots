@@ -24,7 +24,6 @@ source $ZSH/oh-my-zsh.sh
 alias vim="nvim"
 alias vi="nvim"
 #stop me from being naughty boy
-alias code="nvim"
 
 alias ansible-playbook="ansible-playbook --diff"
 export PATH="/usr/local/opt/mysql-client/bin:$PATH"
@@ -45,7 +44,11 @@ alias kwatch="watch kubectl"
 alias kns="kubectl config set-context --current --namespace"
 alias kluster="kubectl config use-context "
 
+alias dicker="docker"
 alias doco="docker compose"
+
+#I keep making this mistake
+alias "git pish"="git push"
 
 # containme drops you and your current path into a docker image you spesify
 containme(){
@@ -74,6 +77,11 @@ gifmov(){
 giefip(){
 	echo "curl http://checkip.amazonaws.com"
 	curl http://checkip.amazonaws.com
+}
+
+randomstr() {
+	size="${1:-32}"
+	head /dev/urandom | LC_ALL=C tr -dc A-Za-z0-9 | head -c$size
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

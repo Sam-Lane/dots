@@ -8,9 +8,13 @@ set undofile
 set incsearch
 set hidden
 set nowrap
+set ignorecase
+set smartcase
 
 nnoremap <SPACE> <Nop>
 let mapleader=" "
+
+nnoremap Y y$
 
 
 " Install vim-plug if not found
@@ -49,6 +53,7 @@ Plug 'fatih/vim-go'
 
 Plug 'stsewd/fzf-checkout.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'junegunn/gv.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'rhysd/git-messenger.vim', {'on': 'GitMessager'}
 
@@ -113,7 +118,7 @@ let test#php#phpunit#executable = 'docker-compose exec app vendor/bin/phpunit'
 " -------------------------------------------------------------------------------------------------
 " coc.nvim default settings
 " -------------------------------------------------------------------------------------------------
-let g:coc_global_extensions = ['coc-docker', 'coc-pairs', 'coc-go', 'coc-jedi', 'coc-phpls', 'coc-tsserver', 'coc-json', 'coc-yaml', 'coc-sh']
+let g:coc_global_extensions = ['coc-pairs', 'coc-go', 'coc-jedi', 'coc-phpls', 'coc-tsserver', 'coc-json', 'coc-sh']
 
 " if hidden is not set, TextEdit might fail.
 set hidden
@@ -129,12 +134,18 @@ set signcolumn=yes
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-function! s:check_back_space() abort
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
@@ -191,8 +202,9 @@ set noexpandtab
 set cursorline
 
 nnoremap <S-f> :Telescope find_files<CR>
-" nnoremap <C-f> :Telescope live_grep <CR>
-nnoremap <C-f> :Telescope fzf_writer staged_grep <CR>
+nnoremap <C-f> :Telescope live_grep <CR>
+nnoremap <silent> gw :Telescope grep_string <CR>
+" nnoremap <C-f> :Telescope fzf_writer staged_grep <CR>
 nnoremap <S-b> :Telescope buffers <CR>
 nnoremap <C-b> :Telescope git_branches<CR>
 
@@ -234,7 +246,10 @@ let g:terraform_fmt_on_save=1
 
 " Git remaps
 nnoremap <silent> <leader>gb :GBranches<CR>
-nnoremap <silent> <leader>gs :Gstatus<CR>
+nnoremap <silent> <leader>gs :G<CR>
+
+" FloatTerm
+nnoremap <silent> <leader>ft :FloatermNew<CR>
 
 " Easy align
 xmap ga <Plug>(EasyAlign)
@@ -259,6 +274,11 @@ inoremap <Up> <nop>
 nnoremap <Down> <nop>
 vnoremap <Down> <nop>
 inoremap <Down> <nop>
+
+" base64 encode a string
+:vnoremap <leader>64 c<c-r>=system('base64', @")<c-r><esc>
+" base64 dencode a string
+:vnoremap <leader>d64 c<c-r>=system('base64 --decode', @")<c-r><esc>
 
 
 " Auto groups
