@@ -24,5 +24,6 @@ link zshrc       "$HOME/.zshrc"
 link vimrc       "$HOME/.vimrc"
 link tmux.conf   "$HOME/.tmux.conf"
 link helpers.sh  "$HOME/.local/bin/helpers.sh"  # sourced by zshrc, not executed directly
+link nvim        "$HOME/.config/nvim"
 
 echo "Done."
