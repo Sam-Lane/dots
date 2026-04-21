@@ -1,7 +1,0 @@
-#!/bin/sh
-
-ns=$(kubectl config view --minify --output 'jsonpath={..namespace}')
-cluster=$(kubectl config view --minify --output 'jsonpath={..contexts[0].context.cluster}' | cut -d "/" -f2)
-
-echo "$cluster | $ns"
-

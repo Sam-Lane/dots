@@ -257,3 +257,6 @@ eval "$(pyenv init - zsh)"
 
 # opencode
 export PATH=/Users/slane/.opencode/bin:$PATH
+
+# k8s helpers
+[[ -f "$HOME/.local/bin/helpers.sh" ]] && source "$HOME/.local/bin/helpers.sh"
