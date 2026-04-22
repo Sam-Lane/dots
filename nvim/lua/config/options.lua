@@ -37,4 +37,8 @@ vim.opt.updatetime = 300
 vim.opt.clipboard = "unnamedplus"
 
 -- Python provider
-vim.g.python3_host_prog = "/opt/homebrew/bin/python3"
+-- On macOS, python3 may not be in PATH until brew shellenv runs, so be explicit.
+-- On Linux, neovim discovers python3 from PATH automatically.
+if vim.fn.has("mac") == 1 then
+  vim.g.python3_host_prog = "/opt/homebrew/bin/python3"
+end

@@ -7,6 +7,13 @@ eval $(/opt/homebrew/bin/brew shellenv)
 # on MacOS set this and restart system for better keyboard performance :^)
 # defaults write NSGlobalDomain KeyRepeat -int 1
 
+# Brew zsh completions — includes git, docker, kubectl, etc.
+# This replaces the oh-my-zsh git plugin: no plugin needed, the _git completion
+# function ships with brew's git package and is picked up automatically by compinit.
+if type brew &>/dev/null; then
+  fpath+="$(brew --prefix)/share/zsh/site-functions"
+fi
+
 autoload -Uz compinit
 if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' ~/.zcompdump) ]; then
   compinit

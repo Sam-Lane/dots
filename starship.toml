@@ -1,0 +1,38 @@
+add_newline = true
+
+[character]
+disabled = false
+
+[cmd_duration]
+disabled = true
+
+[directory]
+truncation_length = 2
+truncate_to_repo = false
+style = 'blue'
+
+[git_branch]
+format = '[$symbol$branch(:$remote_branch)]($style) '
+
+[git_metrics]
+disabled = false
+
+[line_break]
+disabled = false
+
+[terraform]
+format = 'via [$symbol$version]($style) '
+disabled = true
+
+[kubernetes]
+disabled = true
+
+[battery]
+disabled = false
+full_symbol = '🔋 '
+charging_symbol = '⚡️ '
+discharging_symbol = '💀 '
+
+[[battery.display]]
+threshold = 10
+style = 'bold red'
