@@ -28,4 +28,10 @@ link nvim          "$HOME/.config/nvim"
 link starship.toml "$HOME/.config/starship.toml"
 link ai_usage/statusline.sh "$HOME/.claude/statusline-command.sh"
 
+# Claude Code config
+link "claude/skills"        "$HOME/.claude/skills"
+link "claude/agents"        "$HOME/.claude/agents"
+link "claude/commands"      "$HOME/.claude/commands"
+link "claude/settings.json" "$HOME/.claude/settings.json"
+
 echo "Done."
