@@ -26,5 +26,6 @@ link tmux.conf   "$HOME/.tmux.conf"
 link helpers.sh  "$HOME/.local/bin/helpers.sh"  # sourced by zshrc, not executed directly
 link nvim          "$HOME/.config/nvim"
 link starship.toml "$HOME/.config/starship.toml"
+link ai_usage/statusline.sh "$HOME/.claude/statusline-command.sh"
 
 echo "Done."

@@ -24,24 +24,26 @@ return {
 
   -- Status line
   {
-    "itchyny/lightline.vim",
+    "nvim-lualine/lualine.nvim",
     lazy = false,
-    init = function()
-      vim.g.lightline = {
-        colorscheme = "catppuccin",
-        active = {
-          left = { { "mode", "paste" }, { "gitbranch", "readonly", "filename", "modified" } },
-          right = { { "filetype", "lineinfo", "percent" } },
+    dependencies = { "tpope/vim-fugitive" },
+    config = function()
+      require("lualine").setup({
+        options = {
+          theme = "catppuccin",
+          globalstatus = true,
         },
-        component_function = {
-          gitbranch = "FugitiveHead",
+        sections = {
+          lualine_a = { "mode" },
+          lualine_b = { { function() return vim.fn.FugitiveHead() end, icon = "" }, "readonly", "filename", "modified" },
+          lualine_c = {},
+          lualine_x = { "filetype" },
+          lualine_y = { "progress" },
+          lualine_z = { "location" },
         },
-      }
+      })
     end,
   },
-
-  -- File type icons (used by NERDTree)
-  { "ryanoasis/vim-devicons" },
 
   -- Indent guides
   { "Yggdroot/indentLine" },
