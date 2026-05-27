@@ -249,21 +249,19 @@ source <(fzf --zsh)
 # # <<< conda initialize <<<
 
 
-# Created by `pipx` on 2024-09-17 07:40:33
-export PATH="$PATH:/Users/slane/.local/bin"
+export PATH="$PATH:$HOME/.local/bin"
 
-# Added by GDK bootstrap
-eval "$(/opt/homebrew/bin/mise activate zsh)"
+[[ -x /opt/homebrew/bin/mise ]] && eval "$(/opt/homebrew/bin/mise activate zsh)"
 
-[[ -s "/Users/slane/.gvm/scripts/gvm" ]] && source "/Users/slane/.gvm/scripts/gvm"
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - zsh)"
+command -v pyenv &>/dev/null && eval "$(pyenv init - zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# opencode
-export PATH=/Users/slane/.opencode/bin:$PATH
+[[ -d "$HOME/.opencode/bin" ]] && export PATH="$HOME/.opencode/bin:$PATH"
 
 # k8s helpers
 [[ -f "$HOME/.local/bin/helpers.sh" ]] && source "$HOME/.local/bin/helpers.sh"

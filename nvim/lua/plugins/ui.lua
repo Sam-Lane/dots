@@ -30,7 +30,7 @@ return {
     config = function()
       require("lualine").setup({
         options = {
-          theme = "catppuccin",
+          theme = "catppuccin-nvim",
           globalstatus = true,
         },
         sections = {

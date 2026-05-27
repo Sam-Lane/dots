@@ -59,7 +59,8 @@ install_macos() {
     ripgrep fzf lazygit
     node python3 go
     php composer        # LSP: phpactor
-    terraform           # LSP: terraformls
+    pipx
+    claude-code
     starship
     git wget curl
   )
@@ -73,8 +74,17 @@ install_macos() {
     fi
   done
 
+  # Terraform — HashiCorp tap
+  if ! have terraform; then
+    info "Installing terraform via HashiCorp tap..."
+    brew tap hashicorp/tap
+    brew install hashicorp/tap/terraform
+  else
+    success "terraform already installed"
+  fi
+
   # Neovim providers
-  pip3 install --quiet pynvim
+  pipx install pynvim --quiet
   npm install -g neovim --silent
 }
 
@@ -158,8 +168,14 @@ https://apt.releases.hashicorp.com ${codename} main" \
   fi
 
   # Neovim providers
-  pip3 install --quiet pynvim
-  npm install -g neovim --silent
+  if ! have pipx; then
+    $APT install -y pipx
+  fi
+  # Ensure ~/.local/bin is in PATH for the current session and future shells
+  export PATH="$HOME/.local/bin:$PATH"
+  pipx ensurepath --quiet
+  pipx install pynvim --quiet
+  npm install -g neovim @anthropic-ai/claude-code --silent
 }
 
 # ── Arch Linux ────────────────────────────────────────────────────────────────
@@ -185,8 +201,24 @@ install_arch() {
   info "Installing pacman packages..."
   sudo pacman -S --noconfirm --needed "${pkgs[@]}"
 
-  # Neovim node provider
-  npm install -g neovim --silent
+  # Ensure ~/.local/bin is in PATH for the current session and future shells
+  export PATH="$HOME/.local/bin:$PATH"
+  pipx ensurepath --quiet
+
+  # Neovim node provider + global tools
+  npm install -g neovim @anthropic-ai/claude-code --silent
+}
+
+# ── tmux plugin manager (all platforms) ──────────────────────────────────────
+
+install_tpm() {
+  local tpm_dir="$HOME/.tmux/plugins/tpm"
+  if [[ -d "$tpm_dir" ]]; then
+    success "TPM already installed"
+  else
+    info "Installing TPM (tmux plugin manager)..."
+    git clone https://github.com/tmux-plugins/tpm "$tpm_dir"
+  fi
 }
 
 # ── Rust (all platforms) ──────────────────────────────────────────────────────
@@ -229,6 +261,7 @@ case "$OS" in
   arch)   install_arch ;;
 esac
 
+install_tpm
 install_rust
 clone_dots
 
