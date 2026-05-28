@@ -19,7 +19,8 @@ WORKDIR /home/sam
 # Copy dots repo into the expected location.
 # git init without a remote so clone_dots() skips the pull step.
 COPY --chown=sam:sam . /home/sam/dots
-RUN git -C /home/sam/dots init -q && \
+RUN rm -rf /home/sam/dots/.git && \
+    git -C /home/sam/dots init -q && \
     git -C /home/sam/dots config user.email "ci@test.local" && \
     git -C /home/sam/dots config user.name "CI" && \
     git -C /home/sam/dots add -A && \
