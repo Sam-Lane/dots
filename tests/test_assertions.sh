@@ -5,8 +5,8 @@ set -euo pipefail
 PASS=0
 FAIL=0
 
-pass() { echo "[PASS] $*"; ((PASS++)); }
-fail() { echo "[FAIL] $*"; ((FAIL++)); }
+pass() { echo "[PASS] $*"; (( ++PASS )); }
+fail() { echo "[FAIL] $*"; (( ++FAIL )); }
 
 # Make cargo binaries available if rust was installed
 # shellcheck source=/dev/null

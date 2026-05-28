@@ -84,7 +84,7 @@ install_macos() {
   fi
 
   # Neovim providers
-  pipx install pynvim --quiet
+  pipx install pynvim
   npm install -g neovim --silent
 }
 
@@ -107,11 +107,17 @@ install_debian() {
     $APT update -qq
   fi
 
+  # Node.js 18+ required by @anthropic-ai/claude-code
+  if ! have node || [[ "$(node --version 2>/dev/null | cut -d. -f1 | tr -d 'v')" -lt 18 ]]; then
+    info "Installing Node.js 18 via NodeSource..."
+    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+  fi
+
   local pkgs=(
     neovim
     zsh tmux
     ripgrep fzf
-    nodejs npm
+    nodejs
     python3 python3-pip
     golang
     php composer        # LSP: phpactor
@@ -173,9 +179,9 @@ https://apt.releases.hashicorp.com ${codename} main" \
   fi
   # Ensure ~/.local/bin is in PATH for the current session and future shells
   export PATH="$HOME/.local/bin:$PATH"
-  pipx ensurepath --quiet
-  pipx install pynvim --quiet
-  npm install -g neovim @anthropic-ai/claude-code --silent
+  pipx ensurepath
+  pipx install pynvim
+  sudo npm install -g neovim @anthropic-ai/claude-code --silent
 }
 
 # ── Arch Linux ────────────────────────────────────────────────────────────────
@@ -203,7 +209,7 @@ install_arch() {
 
   # Ensure ~/.local/bin is in PATH for the current session and future shells
   export PATH="$HOME/.local/bin:$PATH"
-  pipx ensurepath --quiet
+  pipx ensurepath
 
   # Neovim node provider + global tools
   npm install -g neovim @anthropic-ai/claude-code --silent
