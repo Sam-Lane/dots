@@ -196,7 +196,7 @@ install_arch() {
     ripgrep fzf lazygit
     nodejs npm
     python python-pip python-pynvim  # python-pynvim = neovim provider
-    pipx
+    python-pipx
     go
     php composer        # LSP: phpactor
     terraform           # LSP: terraformls
