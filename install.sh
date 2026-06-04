@@ -196,6 +196,7 @@ install_arch() {
     ripgrep fzf lazygit
     nodejs npm
     python python-pip python-pynvim  # python-pynvim = neovim provider
+    pipx
     go
     php composer        # LSP: phpactor
     terraform           # LSP: terraformls
@@ -212,7 +213,8 @@ install_arch() {
   pipx ensurepath
 
   # Neovim node provider + global tools
-  npm install -g neovim @anthropic-ai/claude-code --silent
+  mkdir -p "$HOME/.local"
+  npm install -g --prefix "$HOME/.local" neovim @anthropic-ai/claude-code --silent
 }
 
 # ── tmux plugin manager (all platforms) ──────────────────────────────────────
