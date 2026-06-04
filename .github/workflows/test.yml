@@ -7,14 +7,23 @@ on:
     branches: [main]
 
 jobs:
-  test-ubuntu:
-    name: Ubuntu (Docker)
+  test:
+    name: ${{ matrix.os }} (Docker)
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, archlinux]
+
     steps:
       - uses: actions/checkout@v4
 
       - name: Build test image
-        run: docker build -f tests/Dockerfile -t dots-test .
+        run: |
+          case "${{ matrix.os }}" in
+            ubuntu-22.04) docker build -f tests/Dockerfile -t dots-test . ;;
+            archlinux)     docker build -f tests/Dockerfile.arch -t dots-test . ;;
+          esac
 
       - name: Run install + assertions
         run: docker run --rm dots-test

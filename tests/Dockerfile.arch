@@ -1,0 +1,27 @@
+FROM archlinux:base
+
+ENV PATH="/home/sam/.local/bin:${PATH}"
+
+# Sync package database, then install base prereqs
+RUN pacman -Sy --noconfirm && \
+    pacman -Sy --noconfirm git curl ca-certificates base-devel && \
+    rm -rf /var/cache/pacman/pkg/*
+
+# Non-root user with passwordless sudo — mirrors real-world usage
+RUN useradd -m -s /bin/bash -u 1000 sam && \
+    echo "sam ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/sam && \
+    chmod 440 /etc/sudoers.d/sam
+
+USER sam
+WORKDIR /home/sam
+
+# Copy dots repo into the expected location.
+COPY --chown=sam:sam . /home/sam/dots
+RUN rm -rf /home/sam/dots/.git && \
+    git -C /home/sam/dots init -q && \
+    git -C /home/sam/dots config user.email "ci@test.local" && \
+    git -C /home/sam/dots config user.name "CI" && \
+    git -C /home/sam/dots add -A && \
+    git -C /home/sam/dots commit -q -m "ci snapshot"
+
+CMD ["bash", "-c", "bash ~/dots/install.sh && bash ~/dots/tests/test_assertions.sh"]

@@ -271,6 +271,17 @@ install_tpm
 install_rust
 clone_dots
 
+# ── PATH compatibility shims (Arch / Debian) ───────────────────────────────────
+
+for pair in python3:python node:nodejs; do
+    expected="${pair%%:*}" actual="${pair##*:}"
+    if [[ ! -x "$HOME/.local/bin/$expected" ]] && have "$actual"; then
+        mkdir -p "$HOME/.local/bin"
+        ln -sf "$(command -v "$actual")" "$HOME/.local/bin/$expected"
+        info "  linked $HOME/.local/bin/$expected -> $actual"
+    fi
+done
+
 info "Setting up config symlinks..."
 bash "$DOTS_DIR/config_setup.sh"
 
