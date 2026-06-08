@@ -7,7 +7,7 @@ return {
     end,
     keys = {
       { "<C-,>",      "<cmd>ClaudeCode<CR>",        mode = { "n", "t" }, desc = "Toggle Claude Code" },
-      { "<leader>cC", "<cmd>ClaudeCodeResume<CR>",  desc = "Resume Claude conversation" },
+      { "<leader>c", "<cmd>ClaudeCodeResume<CR>",  desc = "Resume Claude conversation" },
       { "<leader>cV", "<cmd>ClaudeCodeVerbose<CR>", desc = "Claude verbose mode" },
     },
   },
